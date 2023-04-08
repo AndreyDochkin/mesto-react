@@ -2,7 +2,7 @@ import React from "react";
 
 function Footer() {
   const date = new Date();
-  let currentYear = date.getFullYear();
+  const currentYear = date.getFullYear();
   return (
     <footer className="footer">
       <p>© {currentYear} Mesto Russia</p>
