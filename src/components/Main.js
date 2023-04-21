@@ -1,6 +1,5 @@
 import React from "react";
 import { useContext } from 'react';
-import api from "../utils/Api";
 import Card from "./Card";
 
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -9,33 +8,6 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function Main(props) {
 
   const currentUser = useContext(CurrentUserContext);
-
-  // const [userName, setuserName] = React.useState('');
-  // const [userDescription, setuserDescription] = React.useState('');
-  // const [useruserAvatar, setuseruserAvatar] = React.useState('');
-
-  // React.useEffect(() => {
-  //   api.getCurrentUser()
-  //     .then((user) => {
-  //       setuserName(user.name);
-  //       setuserDescription(user.about);
-  //       setuseruserAvatar(user.avatar);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
-
-  const [cards, setCards] = React.useState([]);
-  React.useEffect(() => {
-    api.getCards()
-      .then((cardItems) => {
-        setCards(cardItems);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
 
   return (
     <main className="content">
@@ -63,8 +35,8 @@ function Main(props) {
       </section>
 
       <section className="gallery">
-        {cards.map((card) => (
-          <Card card={card} key={card._id} onCardClick={props.onCardClick}/>
+        {props.cards.map((card) => (
+          <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike}/>
         ))}
       </section>
     </main>
