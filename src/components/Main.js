@@ -13,7 +13,11 @@ function Main(props) {
     <main className="content">
       <section className="profile">
         <div className="profile__overlay" onClick={props.onEditAvatar}>
-          <img className="profile__avatar" src={currentUser.avatar} alt="Аватар" />
+          <img
+            className="profile__avatar"
+            src={currentUser.avatar}
+            alt="Аватар"
+          />
         </div>
 
         <div className="profile__info">
@@ -36,7 +40,13 @@ function Main(props) {
 
       <section className="gallery">
         {props.cards.map((card) => (
-          <Card card={card} key={card._id} onCardClick={props.onCardClick} onCardLike={props.onCardLike}/>
+          <Card
+            card={card}
+            key={card._id}
+            onCardClick={props.onCardClick}
+            onCardLike={props.onCardLike}
+            onCardDelete={props.onCardDelete}
+          />
         ))}
       </section>
     </main>
