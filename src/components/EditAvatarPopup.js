@@ -2,7 +2,6 @@ import React from "react";
 import { useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-
 function EditAvatarPopup(props) {
 
     const inputAvatar = useRef('');

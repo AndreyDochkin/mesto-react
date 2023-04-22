@@ -15,16 +15,16 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
 function App() {
 
-    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
-    const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
-    const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-    const [selectedCard, setSelectedCard] = React.useState({});
+    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+    const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+    const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+    const [selectedCard, setSelectedCard] = useState({});
 
-    const [currentUser, setCurrentUser] = React.useState({});
+    const [currentUser, setCurrentUser] = useState({});
 
-    const [cards, setCards] = React.useState([]);
+    const [cards, setCards] = useState([]);
 
-    React.useEffect(() => {
+    useEffect(() => {
         api.getCurrentUser()
             .then((user) => {
                 setCurrentUser(user);
@@ -32,15 +32,13 @@ function App() {
             .catch((err) => { console.log(err) });
     }, []);
 
-
-    React.useEffect(() => {
+    useEffect(() => {
         api.getCards()
             .then((cardItems) => {
                 setCards(cardItems);
             })
             .catch((err) => { console.log(err) });
     }, []);
-
 
     function handleCardLike(card) {
         const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -89,7 +87,6 @@ function App() {
         closeAllPopups();
     }
 
-
     function handleEditProfileClick() {
         setIsEditProfilePopupOpen(true);
     }
@@ -106,14 +103,12 @@ function App() {
         setSelectedCard({ ...card });
     }
 
-
     function closeAllPopups() {
         setIsEditProfilePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
         setIsAddPlacePopupOpen(false);
         setSelectedCard({});
     }
-
 
     return (
         <CurrentUserContext.Provider value={currentUser}>
@@ -131,7 +126,6 @@ function App() {
                     <Footer />
                 </div>
 
-
                 <ImagePopup onClose={closeAllPopups} card={selectedCard} />
 
                 <PopupWithForm name='confirm' title='Вы уверены?' submitButtonName='Да' />
@@ -140,17 +134,7 @@ function App() {
 
                 <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
 
-
                 <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-                {/* <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name='card' title='Новое место' submitButtonName='Создать'>
-                    <input className="popup__input popup__input_type_name" id="place-name-input" type="text" name="name"
-                        placeholder="Название" minLength="2" maxLength="30" required />
-                    <span className="popup__error place-name-input-error"></span>
-
-                    <input className="popup__input popup__input_type_about" id="url-input" type="url" name="link"
-                        placeholder="Ссылка на картинку" required />
-                    <span className="popup__error url-input-error"></span>
-                </PopupWithForm> */}
 
             </div>
 
