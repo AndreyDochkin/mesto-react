@@ -1,5 +1,4 @@
 import React from "react";
-import { useEffect, useState } from "react";
 import PopupWithForm from "./PopupWithForm";
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 

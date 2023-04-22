@@ -6,6 +6,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from "./EditProfilePopup";
+import EditAvatarPopup from "./EditAvatarPopup";
 
 import api from "../utils/Api";
 
@@ -62,7 +63,17 @@ function App() {
         api.setCurrentUser(name, about)
             .then((newUser) => { setCurrentUser(newUser) })
             .catch((err) => { console.log(err) });
-            
+
+        closeAllPopups();
+    }
+
+    function handleUpdateAvatar({ avatar }) {
+        api.setUserAvatar(avatar)
+            .then((newUser) => {
+                setCurrentUser({ avatar: newUser.avatar })
+            })
+            .catch((err) => { console.log(err) });
+
         closeAllPopups();
     }
 
@@ -116,11 +127,12 @@ function App() {
 
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
-                <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} name='avatar' title='Обновить аватар' submitButtonName='Сохранить'>
+                <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
+                {/* <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} name='avatar' title='Обновить аватар' submitButtonName='Сохранить'>
                     <input className="popup__input popup__input_type_avatar" id="url-avatar-input" type="url" name="avatar"
                         placeholder="Ссылка на аватар" required />
                     <span className="popup__error url-avatar-input-error"></span>
-                </PopupWithForm>
+                </PopupWithForm> */}
 
 
                 <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name='card' title='Новое место' submitButtonName='Создать'>
