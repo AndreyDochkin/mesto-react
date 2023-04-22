@@ -7,6 +7,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
+import AddPlacePopup from "./AddPlacePopup";
 
 import api from "../utils/Api";
 
@@ -53,8 +54,8 @@ function App() {
 
     function handleDeleteClick(card) {
         api.deleteCard(card._id)
-            .then((delCard) => {
-                setCards((cards) => cards.filter((c) => c._id === delCard._id ? false : true));
+            .then(() => {
+                setCards((cards) => cards.filter((c) => c._id !== card._id));
             })
             .catch((err) => { console.log(err) });
     }
@@ -70,13 +71,23 @@ function App() {
     function handleUpdateAvatar({ avatar }) {
         api.setUserAvatar(avatar)
             .then((newUser) => {
-                setCurrentUser({ avatar: newUser.avatar })
+                const {name, about} = currentUser;
+                setCurrentUser({name,about, avatar: newUser.avatar })
             })
             .catch((err) => { console.log(err) });
 
         closeAllPopups();
     }
 
+    function handleAddPlaceSubmit({ name, link }) {
+        api.addCard(name, link)
+            .then((newCard) => {
+                setCards([newCard, ...cards]);
+            })
+            .catch((err) => { console.log(err) });
+
+        closeAllPopups();
+    }
 
 
     function handleEditProfileClick() {
@@ -128,14 +139,10 @@ function App() {
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
                 <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} />
-                {/* <PopupWithForm isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} name='avatar' title='Обновить аватар' submitButtonName='Сохранить'>
-                    <input className="popup__input popup__input_type_avatar" id="url-avatar-input" type="url" name="avatar"
-                        placeholder="Ссылка на аватар" required />
-                    <span className="popup__error url-avatar-input-error"></span>
-                </PopupWithForm> */}
 
 
-                <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name='card' title='Новое место' submitButtonName='Создать'>
+                <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+                {/* <PopupWithForm isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} name='card' title='Новое место' submitButtonName='Создать'>
                     <input className="popup__input popup__input_type_name" id="place-name-input" type="text" name="name"
                         placeholder="Название" minLength="2" maxLength="30" required />
                     <span className="popup__error place-name-input-error"></span>
@@ -143,7 +150,7 @@ function App() {
                     <input className="popup__input popup__input_type_about" id="url-input" type="url" name="link"
                         placeholder="Ссылка на картинку" required />
                     <span className="popup__error url-input-error"></span>
-                </PopupWithForm>
+                </PopupWithForm> */}
 
             </div>
 
