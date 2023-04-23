@@ -5,7 +5,7 @@ function AddPlacePopup(props) {
     const [placeName, setPlaceName] = React.useState('');
     const [placeLink, setPlaceLink] = React.useState('');
 
-    useEffect(() => {
+    React.useEffect(() => {
         setPlaceName('');
         setPlaceLink('');
     }, [props.isOpen])
