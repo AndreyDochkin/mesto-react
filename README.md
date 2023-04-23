@@ -1,35 +1,35 @@
-#Ссылка на проект
-https://cardify.surge.sh/
+# Project: Mesto
 
-# Описание проекта
+## Description
+Mesto is a project, featuring adaptive and responsive design, API usage, and object-oriented programming. The project includes a profile page with avatar and description, as well as a gallery of images. The page allows users to edit their profile information and provides live form validation.
 
-Этот проект - это React-приложение. Полностью отзывчивая фотогалерея, позволяющая пользователям просматривать фотографии и выполнять действия, такие как добавление, удаление или лайк фотографийи. Разработана с использованием React.js и оптимизирована для высокой производительности. 
+## Stack
+- React.js
+- HTML and CSS
+- Flexbox and Grid layout
+- Media queries
+- API (using fetch)
+- Live form validation
+- BEM Nested methodology
+- Webpack5
 
-## Технологии
+## Deployment
 
-Данный проект был создан с использованием следующих технологий:
+Project was deployed using varcel service, and can be accessed at the following link:
+- https://mesto-react-rosy.vercel.app/
 
-- React
-- JavaScript (ES6+)
-- HTML
-- CSS
-- Webpack
-
-## Команды для сборки и запуска проекта
-
-Чтобы запустить проект на локальной машине, выполните следующие команды в терминале:
-
-```
+To install NPM dependencies:
+```sh
 npm install
-npm start
 ```
 
-Эти команды установят все необходимые зависимости и запустят приложение в режиме разработки. Откройте [http://localhost:3000](http://localhost:3000), чтобы увидеть приложение в браузере.
-
-Чтобы создать оптимизированную версию проекта для развертывания на сервере, выполните следующую команду:
-
+To start developing using Webpack dev server:
+```sh
+npm run dev
 ```
+
+To build the project for production:
+```sh
 npm run build
 ```
 
-Эта команда создаст оптимизированную версию проекта в папке `build`.
