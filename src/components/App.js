@@ -18,7 +18,10 @@ function App() {
     const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
     const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
     const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+    const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
+
     const [selectedCard, setSelectedCard] = useState({});
+    const [deleteCard, setDeleteCard] = useState({});
 
     const [currentUser, setCurrentUser] = useState({});
 
@@ -51,11 +54,19 @@ function App() {
     }
 
     function handleDeleteClick(card) {
-        api.deleteCard(card._id)
+
+        setIsDeletePopupOpen(true);
+        setDeleteCard(card);
+    }
+
+    function handleConfirmDelete(e) {
+        e.preventDefault();
+        api.deleteCard(deleteCard._id)
             .then(() => {
-                setCards((cards) => cards.filter((c) => c._id !== card._id));
+                setCards((cards) => cards.filter((c) => c._id !== deleteCard._id));
             })
             .catch((err) => { console.log(err) });
+        closeAllPopups();
     }
 
     function handleUpdateUser({ name, about }) {
@@ -69,8 +80,8 @@ function App() {
     function handleUpdateAvatar({ avatar }) {
         api.setUserAvatar(avatar)
             .then((newUser) => {
-                const {name, about} = currentUser;
-                setCurrentUser({name,about, avatar: newUser.avatar })
+                const { name, about } = currentUser;
+                setCurrentUser({ name, about, avatar: newUser.avatar })
             })
             .catch((err) => { console.log(err) });
 
@@ -107,7 +118,9 @@ function App() {
         setIsEditProfilePopupOpen(false);
         setIsEditAvatarPopupOpen(false);
         setIsAddPlacePopupOpen(false);
+        setIsDeletePopupOpen(false);
         setSelectedCard({});
+        setDeleteCard({});
     }
 
     return (
@@ -128,7 +141,7 @@ function App() {
 
                 <ImagePopup onClose={closeAllPopups} card={selectedCard} />
 
-                <PopupWithForm name='confirm' title='Вы уверены?' submitButtonName='Да' />
+                <PopupWithForm isOpen={isDeletePopupOpen} onClose={closeAllPopups} name='confirm' title='Вы уверены?' submitButtonName='Да' onSubmit={handleConfirmDelete} />
 
                 <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
 
